@@ -22,6 +22,55 @@ body {
   overflow: hidden;
 }
 
+#app {
+  position: relative;
+}
+
 canvas {
   display: block;
+}
+
+.dialogue-box {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: min(720px, calc(100% - 32px));
+  min-height: 132px;
+  padding: 18px 22px 16px;
+  color: #e6eadf;
+  background: rgba(12, 18, 22, 0.9);
+  border: 1px solid rgba(185, 199, 189, 0.38);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38);
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.dialogue-box[hidden] {
+  display: none;
+}
+
+.dialogue-box__name {
+  margin: 0 0 10px;
+  color: #d8d1b3;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.dialogue-box__text {
+  margin: 0;
+  max-width: 64ch;
+  color: #d9e0d8;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.dialogue-box__progress {
+  display: block;
+  margin-top: 14px;
+  color: #8fa6a2;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
