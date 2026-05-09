@@ -51,6 +51,21 @@ npm run build
 
 `npm run dev` starts the client and server together. `npm run typecheck` verifies TypeScript across all workspaces. `npm run build` builds the shared package first, then the client and server.
 
+## Milestone 2 Manual Test
+
+After `npm run dev`, open `http://localhost:5173` in two browser tabs.
+
+Expected behavior:
+
+- The local player is named `Explorer`, not `Naem`.
+- Naem appears as a stationary NPC placeholder.
+- Left-clicking the isometric grid moves the local player toward the clicked world location.
+- The camera follows the local player.
+- Each browser tab receives a different temporary Explorer identity.
+- Moving in one tab updates the remote marker in the other tab.
+- Closing one tab removes that remote player from the other tab.
+- `http://localhost:3000/health` returns ok.
+
 ## Optional Docker Compose
 
 `infra/docker-compose.yml` is only a local development convenience. It is not production infrastructure and does not introduce cloud deployment, managed services, or persistence.
@@ -64,8 +79,11 @@ The foundation intentionally does not include:
 - database persistence
 - combat
 - inventory
+- quest systems
 - cloud deployment
 - production infrastructure
 - large-scale MMO systems
 
-The first target is a tiny playable vertical foundation: a browser view, a visible isometric space, a placeholder player marker, and a minimal realtime server.
+Milestone 2 adds temporary multiplayer presence only. Player identities and positions are kept in server memory and disappear when the server restarts.
+
+For future PostgreSQL and account planning, see [PERSISTENCE-PLAN.md](PERSISTENCE-PLAN.md).
