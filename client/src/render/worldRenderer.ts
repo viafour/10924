@@ -35,10 +35,10 @@ export class WorldRenderer {
   update(state: WorldRenderState): void {
     this.updateCamera(state.localPlayer);
     this.syncNpcs(state.npcs);
-    this.syncPlayers([
-      ...state.remotePlayers,
-      ...(state.localPlayer ? [state.localPlayer] : [])
-    ]);
+    this.syncPlayers(
+      [...state.remotePlayers, ...(state.localPlayer ? [state.localPlayer] : [])],
+      state.localPlayer?.id ?? null
+    );
     this.logDiagnostics();
   }
 
@@ -90,13 +90,13 @@ export class WorldRenderer {
       .stroke({ color: 0x5f7c82, alpha: 0.28, width: 1 });
   }
 
-  private syncPlayers(players: PlayerState[]): void {
+  private syncPlayers(players: PlayerState[], localPlayerId: string | null): void {
     const activeIds = new Set<string>();
 
     for (const player of players) {
       activeIds.add(player.id);
 
-      const marker = this.getOrCreatePlayerMarker(player);
+      const marker = this.getOrCreatePlayerMarker(player, player.id === localPlayerId);
       const position = gridToScreen(player);
 
       marker.container.position.set(position.x, position.y);
@@ -120,7 +120,7 @@ export class WorldRenderer {
     this.removeMissingMarkers(this.npcMarkers, activeIds);
   }
 
-  private getOrCreatePlayerMarker(player: PlayerState): MarkerView {
+  private getOrCreatePlayerMarker(player: PlayerState, isLocalPlayer: boolean): MarkerView {
     const existing = this.playerMarkers.get(player.id);
 
     if (existing) {
@@ -128,7 +128,6 @@ export class WorldRenderer {
       return existing;
     }
 
-    const isLocalPlayer = player.displayName === "Explorer 1" || this.playerMarkers.size === 0;
     const marker = this.createPlayerMarker(
       player.displayName,
       isLocalPlayer ? 0xd8d1b3 : 0x8fa6c9,
