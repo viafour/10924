@@ -9,6 +9,11 @@ import { WorldRenderer } from "./render/worldRenderer";
 const movementSpeedTilesPerSecond = 3;
 const positionUpdateIntervalSeconds = 0.1;
 
+type MovementTickResult = {
+  moved: boolean;
+  arrived: boolean;
+};
+
 export async function startApp(root: HTMLElement): Promise<void> {
   const app = new Application();
 
@@ -65,13 +70,17 @@ export async function startApp(root: HTMLElement): Promise<void> {
 
   app.ticker.add((ticker) => {
     const deltaSeconds = ticker.deltaMS / 1000;
-    const moved = updateLocalMovement(state, deltaSeconds);
+    const movement = updateLocalMovement(state, deltaSeconds);
 
-    if (moved) {
+    if (movement.moved) {
       sendAccumulator += deltaSeconds;
     }
 
-    if (moved && state.localPlayer && sendAccumulator >= positionUpdateIntervalSeconds) {
+    if (
+      movement.moved &&
+      state.localPlayer &&
+      (movement.arrived || sendAccumulator >= positionUpdateIntervalSeconds)
+    ) {
       socket.emit("player:move", {
         x: state.localPlayer.x,
         y: state.localPlayer.y
@@ -87,9 +96,9 @@ export async function startApp(root: HTMLElement): Promise<void> {
   });
 }
 
-function updateLocalMovement(state: ClientWorldState, deltaSeconds: number): boolean {
+function updateLocalMovement(state: ClientWorldState, deltaSeconds: number): MovementTickResult {
   if (!state.localPlayer || !state.movementTarget) {
-    return false;
+    return { moved: false, arrived: false };
   }
 
   const result = moveToward(
@@ -105,5 +114,5 @@ function updateLocalMovement(state: ClientWorldState, deltaSeconds: number): boo
     state.movementTarget = null;
   }
 
-  return true;
+  return { moved: true, arrived: result.arrived };
 }
