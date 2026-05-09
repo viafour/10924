@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
 
   socket.broadcast.emit("player:joined", { player });
 
-  socket.on("player:move", (position) => {
+  socket.on("player:move", (position: WorldPosition) => {
     const currentPlayer = players.get(socket.id);
 
     if (!currentPlayer || !isValidPosition(position)) {
