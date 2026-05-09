@@ -66,6 +66,23 @@ Expected behavior:
 - Closing one tab removes that remote player from the other tab.
 - `http://localhost:3000/health` returns ok.
 
+## Milestone 3 Manual Test
+
+After `npm run dev`, open `http://localhost:5173`.
+
+Expected behavior:
+
+- Movement and camera follow still work.
+- Moving near Naem and pressing `E` opens dialogue.
+- Clicking Naem while nearby opens dialogue.
+- Clicking the dialogue box or pressing `Enter` advances through dialogue lines.
+- Advancing after the final line closes the dialogue.
+- Pressing `Escape` closes dialogue.
+- Interacting while too far away does not open dialogue.
+- Opening dialogue in one browser tab does not affect another tab.
+- Remote player movement still syncs.
+- Idling for a few minutes remains stable.
+
 ## Optional Docker Compose
 
 `infra/docker-compose.yml` is only a local development convenience. It is not production infrastructure and does not introduce cloud deployment, managed services, or persistence.
@@ -84,6 +101,6 @@ The foundation intentionally does not include:
 - production infrastructure
 - large-scale MMO systems
 
-Milestone 2 adds temporary multiplayer presence only. Player identities and positions are kept in server memory and disappear when the server restarts.
+Milestone 2 adds temporary multiplayer presence only. Player identities and positions are kept in server memory and disappear when the server restarts. Milestone 3 adds local-only NPC dialogue and does not add server-side dialogue state.
 
 For future PostgreSQL and account planning, see [PERSISTENCE-PLAN.md](PERSISTENCE-PLAN.md).
