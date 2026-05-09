@@ -8,62 +8,70 @@ export type WorldRenderState = {
   npcs: NpcState[];
 };
 
+type MarkerView = {
+  container: Container;
+  label: Text;
+  displayName: string;
+};
+
+const gridRadius = 20;
+const diagnosticsIntervalMs = 5000;
+
 export class WorldRenderer {
-  private readonly stage = new Container();
+  private readonly world = new Container();
+  private readonly groundLayer = new Container();
+  private readonly npcLayer = new Container();
+  private readonly playerLayer = new Container();
+  private readonly playerMarkers = new Map<string, MarkerView>();
+  private readonly npcMarkers = new Map<string, MarkerView>();
+  private lastDiagnosticsAt = 0;
 
   constructor(private readonly app: Application) {
-    this.app.stage.addChild(this.stage);
+    this.world.addChild(this.groundLayer, this.npcLayer, this.playerLayer);
+    this.app.stage.addChild(this.world);
+    this.initializeGround();
   }
 
-  draw(state: WorldRenderState): void {
-    this.stage.removeChildren();
-    this.followLocalPlayer(state.localPlayer);
-
-    this.drawGround();
-
-    for (const npc of state.npcs) {
-      this.drawNpc(npc);
-    }
-
-    for (const player of state.remotePlayers) {
-      this.drawPlayer(player, 0x8fa6c9, 0x657b9f);
-    }
-
-    if (state.localPlayer) {
-      this.drawPlayer(state.localPlayer, 0xd8d1b3, 0x8fb0a9);
-    }
+  update(state: WorldRenderState): void {
+    this.updateCamera(state.localPlayer);
+    this.syncNpcs(state.npcs);
+    this.syncPlayers([
+      ...state.remotePlayers,
+      ...(state.localPlayer ? [state.localPlayer] : [])
+    ]);
+    this.logDiagnostics();
   }
 
   screenToWorld(point: ScreenPoint): ScreenPoint {
     return {
-      x: point.x - this.stage.x,
-      y: point.y - this.stage.y
+      x: point.x - this.world.x,
+      y: point.y - this.world.y
     };
   }
 
-  private followLocalPlayer(player: PlayerState | null): void {
+  private updateCamera(player: PlayerState | null): void {
     if (!player) {
-      this.stage.x = this.app.screen.width / 2;
-      this.stage.y = this.app.screen.height / 2;
+      this.world.position.set(this.app.screen.width / 2, this.app.screen.height / 2);
       return;
     }
 
     const playerScreen = gridToScreen(player);
-    this.stage.x = this.app.screen.width / 2 - playerScreen.x;
-    this.stage.y = this.app.screen.height / 2 - playerScreen.y;
+    this.world.position.set(
+      this.app.screen.width / 2 - playerScreen.x,
+      this.app.screen.height / 2 - playerScreen.y
+    );
   }
 
-  private drawGround(): void {
+  private initializeGround(): void {
     const ground = new Graphics();
-    const radius = 20;
 
-    for (let y = -radius; y <= radius; y += 1) {
-      for (let x = -radius; x <= radius; x += 1) {
+    for (let y = -gridRadius; y <= gridRadius; y += 1) {
+      for (let x = -gridRadius; x <= gridRadius; x += 1) {
         this.drawTile(ground, x, y);
       }
     }
 
-    this.stage.addChild(ground);
+    this.groundLayer.addChild(ground);
   }
 
   private drawTile(graphics: Graphics, gridX: number, gridY: number): void {
@@ -82,44 +90,119 @@ export class WorldRenderer {
       .stroke({ color: 0x5f7c82, alpha: 0.28, width: 1 });
   }
 
-  private drawPlayer(player: PlayerState, headColor: number, bodyColor: number): void {
-    const position = gridToScreen(player);
+  private syncPlayers(players: PlayerState[]): void {
+    const activeIds = new Set<string>();
+
+    for (const player of players) {
+      activeIds.add(player.id);
+
+      const marker = this.getOrCreatePlayerMarker(player);
+      const position = gridToScreen(player);
+
+      marker.container.position.set(position.x, position.y);
+    }
+
+    this.removeMissingMarkers(this.playerMarkers, activeIds);
+  }
+
+  private syncNpcs(npcs: NpcState[]): void {
+    const activeIds = new Set<string>();
+
+    for (const npc of npcs) {
+      activeIds.add(npc.id);
+
+      const marker = this.getOrCreateNpcMarker(npc);
+      const position = gridToScreen(npc);
+
+      marker.container.position.set(position.x, position.y);
+    }
+
+    this.removeMissingMarkers(this.npcMarkers, activeIds);
+  }
+
+  private getOrCreatePlayerMarker(player: PlayerState): MarkerView {
+    const existing = this.playerMarkers.get(player.id);
+
+    if (existing) {
+      this.updateLabel(existing, player.displayName);
+      return existing;
+    }
+
+    const isLocalPlayer = player.displayName === "Explorer 1" || this.playerMarkers.size === 0;
+    const marker = this.createPlayerMarker(
+      player.displayName,
+      isLocalPlayer ? 0xd8d1b3 : 0x8fa6c9,
+      isLocalPlayer ? 0x8fb0a9 : 0x657b9f
+    );
+
+    this.playerMarkers.set(player.id, marker);
+    this.playerLayer.addChild(marker.container);
+
+    return marker;
+  }
+
+  private getOrCreateNpcMarker(npc: NpcState): MarkerView {
+    const existing = this.npcMarkers.get(npc.id);
+
+    if (existing) {
+      this.updateLabel(existing, npc.displayName);
+      return existing;
+    }
+
+    const marker = this.createNpcMarker(npc.displayName);
+
+    this.npcMarkers.set(npc.id, marker);
+    this.npcLayer.addChild(marker.container);
+
+    return marker;
+  }
+
+  private createPlayerMarker(displayName: string, headColor: number, bodyColor: number): MarkerView {
+    const container = new Container();
     const marker = new Graphics();
 
     marker
-      .circle(position.x, position.y - 20, 12)
+      .circle(0, -20, 12)
       .fill({ color: headColor })
       .stroke({ color: 0x111820, width: 3 });
 
     marker
-      .moveTo(position.x, position.y - 8)
-      .lineTo(position.x + 14, position.y + 16)
-      .lineTo(position.x - 14, position.y + 16)
+      .moveTo(0, -8)
+      .lineTo(14, 16)
+      .lineTo(-14, 16)
       .closePath()
       .fill({ color: bodyColor, alpha: 0.95 });
 
-    this.stage.addChild(marker, this.createLabel(player.displayName, position));
+    const label = this.createLabel(displayName);
+
+    container.addChild(marker, label);
+
+    return { container, label, displayName };
   }
 
-  private drawNpc(npc: NpcState): void {
-    const position = gridToScreen(npc);
+  private createNpcMarker(displayName: string): MarkerView {
+    const container = new Container();
     const marker = new Graphics();
 
     marker
-      .circle(position.x, position.y - 22, 11)
+      .circle(0, -22, 11)
       .fill({ color: 0xd9d2c0 })
       .stroke({ color: 0x111820, width: 3 });
 
     marker
-      .moveTo(position.x - 18, position.y - 2)
-      .lineTo(position.x, position.y + 18)
-      .lineTo(position.x + 18, position.y - 2)
+      .moveTo(-18, -2)
+      .lineTo(0, 18)
+      .lineTo(18, -2)
       .stroke({ color: 0xb9c7bd, alpha: 0.85, width: 4 });
 
-    this.stage.addChild(marker, this.createLabel(npc.displayName, position));
+    const label = this.createLabel(displayName);
+
+    container.addChild(marker, label);
+
+    return { container, label, displayName };
   }
 
-  private createLabel(displayName: string, position: ScreenPoint): Text {
+  private createLabel(displayName: string): Text {
     const label = new Text({
       text: displayName,
       style: new TextStyle({
@@ -130,8 +213,48 @@ export class WorldRenderer {
     });
 
     label.anchor.set(0.5);
-    label.position.set(position.x, position.y + 34);
+    label.position.set(0, 34);
 
     return label;
+  }
+
+  private updateLabel(marker: MarkerView, displayName: string): void {
+    if (marker.displayName === displayName) {
+      return;
+    }
+
+    marker.displayName = displayName;
+    marker.label.text = displayName;
+  }
+
+  private removeMissingMarkers(markers: Map<string, MarkerView>, activeIds: Set<string>): void {
+    for (const [id, marker] of markers) {
+      if (activeIds.has(id)) {
+        continue;
+      }
+
+      markers.delete(id);
+      marker.container.destroy({ children: true });
+    }
+  }
+
+  private logDiagnostics(): void {
+    if (window.location.hostname !== "localhost") {
+      return;
+    }
+
+    const now = performance.now();
+
+    if (now - this.lastDiagnosticsAt < diagnosticsIntervalMs) {
+      return;
+    }
+
+    this.lastDiagnosticsAt = now;
+    console.debug("WorldRenderer diagnostics", {
+      worldChildren: this.world.children.length,
+      groundChildren: this.groundLayer.children.length,
+      playerMarkers: this.playerMarkers.size,
+      npcMarkers: this.npcMarkers.size
+    });
   }
 }
