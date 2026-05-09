@@ -88,7 +88,7 @@ export async function startApp(root: HTMLElement): Promise<void> {
       sendAccumulator = 0;
     }
 
-    world.draw({
+    world.update({
       localPlayer: state.localPlayer,
       remotePlayers: state.getRemotePlayers(),
       npcs: state.getNpcs()
