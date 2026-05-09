@@ -102,12 +102,12 @@ export async function startApp(root: HTMLElement): Promise<void> {
     }
 
     isLeftMouseHeld = false;
-    app.canvas.releasePointerCapture(event.pointerId);
+    releaseCanvasPointerCapture(app.canvas, event.pointerId);
   });
 
   app.canvas.addEventListener("pointercancel", (event) => {
     isLeftMouseHeld = false;
-    app.canvas.releasePointerCapture(event.pointerId);
+    releaseCanvasPointerCapture(app.canvas, event.pointerId);
   });
 
   window.addEventListener("keydown", (event) => {
@@ -172,6 +172,12 @@ function getCanvasPointerPosition(canvas: HTMLCanvasElement, event: PointerEvent
     x: event.clientX - bounds.left,
     y: event.clientY - bounds.top
   };
+}
+
+function releaseCanvasPointerCapture(canvas: HTMLCanvasElement, pointerId: number): void {
+  if (canvas.hasPointerCapture(pointerId)) {
+    canvas.releasePointerCapture(pointerId);
+  }
 }
 
 function getWorldPositionFromPointer(world: WorldRenderer, pointerPosition: ScreenPoint): WorldPosition {
