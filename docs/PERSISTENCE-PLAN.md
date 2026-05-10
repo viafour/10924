@@ -1,6 +1,6 @@
 # Persistence Plan
 
-Milestone 2 does not require a database, accounts, auth, sessions, or migrations. The current server stores connected player positions in memory only.
+The current Liberty prototype does not require a database, accounts, auth, sessions, or migrations. The server stores temporary session positions in memory only.
 
 ## Preferred Database
 
@@ -33,6 +33,8 @@ Likely fields:
 ### characters
 
 Stores playable character records owned by accounts.
+
+For 10924: Liberty, Via Four is the primary playable character. Future character/account work should not imply multiple canon Via Fours; extra local test clients are session/dev echoes unless a future design says otherwise.
 
 Likely fields:
 
@@ -69,7 +71,7 @@ Likely fields:
 
 ## Future Auth Direction
 
-Authentication should be added only when the project needs named returning players.
+Authentication should be added only when the project needs returning players or saved local/session progress.
 
 When added, use proven libraries for:
 
@@ -79,9 +81,9 @@ When added, use proven libraries for:
 
 Do not hand-roll password storage or cryptography.
 
-## Milestone 2 Non-Goals
+## Current Non-Goals
 
-Milestone 2 intentionally does not add:
+The Liberty prototype intentionally does not add:
 
 - PostgreSQL runtime requirements
 - database clients
@@ -92,4 +94,4 @@ Milestone 2 intentionally does not add:
 - JWT handling
 - session management
 
-The current temporary Explorer identities are connection-scoped and disappear when the server restarts or the browser disconnects.
+The current temporary Via Four/Echo identities are connection-scoped and disappear when the server restarts or the browser disconnects.
