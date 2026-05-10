@@ -9,7 +9,6 @@ The current first-game direction is **10924: Liberty**: an isometric narrative R
 - **Format:** browser-first isometric narrative RPG prototype
 - **Primary experience:** transformation-driven action, exploration, atmosphere, memory, and narrative discovery
 - **Initial world focus:** Via Four, dedrix transformation, the Great War, and the aftermath of being classified as a sentient catastrophe-class weapon
-- **Secondary/archival focus:** Druz, the Druzhinzi, and Naem Etil remain important 10924 canon, but they are no longer the initial playable focus
 - **Core inspiration:** the atmosphere and mystery of Diablo II, the tactical pressure of deliberate input systems, and morally complicated war stories where no faction remains clean
 
 ## Development posture
