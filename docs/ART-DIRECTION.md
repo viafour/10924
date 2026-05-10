@@ -2,9 +2,9 @@
 
 ## Core visual identity
 
-10924 should feel like cold beauty: lush, living, ornate, violent, and emotionally distant.
+10924 should feel like cold beauty: living, ornate, violent, and emotionally distant.
 
-The current first-game direction, **10924: Liberty**, shifts the initial visual target away from Druz-only canopy fantasy and toward wartime science-fantasy shaped by dedrix, interstellar conflict, institutional control, and aftermath.
+The current first-game direction, **10924: Liberty**, targets wartime science-fantasy shaped by dedrix, interstellar conflict, institutional control, and aftermath.
 
 The visual language should combine:
 
@@ -74,21 +74,6 @@ Possible presentation cues:
 - dedrix glow or pulse under Via's skin
 - directional glyphs or arrows that feel diegetic
 - failed or inhibited commands causing distortion or partial form feedback
-
-## Druz visual language
-
-Druz remains a secondary canon reference for later arcs or future expansions.
-
-Druz is defined by:
-
-- giant canopy trees
-- sky-dominant civilization
-- lush terraces and elevated decks
-- pale stone drawn from rare, deep mountain sources
-- architecture adapted for winged beings
-- views across treetops, mist, foliage, and open air
-
-The older Druz / Naem direction should not drive the first playable slice unless intentionally revisited.
 
 ## Character direction
 
