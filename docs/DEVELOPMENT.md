@@ -1,6 +1,6 @@
 # Development
 
-10924 starts as a small browser-first TypeScript prototype. The goal is a visible, understandable foundation for an isometric narrative RPG, not a complete MMO architecture.
+10924 starts as a small browser-first TypeScript prototype. The current first-game direction is **10924: Liberty**, an isometric narrative RPG centered on Via Four.
 
 ## Requirements
 
@@ -51,20 +51,30 @@ npm run build
 
 `npm run dev` starts the client and server together. `npm run typecheck` verifies TypeScript across all workspaces. `npm run build` builds the shared package first, then the client and server.
 
-## Milestone 2 Manual Test
+## Liberty Runtime Manual Test
 
-After `npm run dev`, open `http://localhost:5173` in two browser tabs.
+After `npm run dev`, open `http://localhost:5173`.
 
 Expected behavior:
 
-- The local player is named `Explorer`, not `Via Four`.
-- Via Four appears as a stationary NPC placeholder.
-- Left-clicking the isometric grid moves the local player toward the clicked world location.
-- The camera follows the local player.
-- Each browser tab receives a different temporary Explorer identity.
-- Moving in one tab updates the remote marker in the other tab.
-- Closing one tab removes that remote player from the other tab.
+- The primary local playable character is named `Via Four`.
+- Via Four does not also appear as a stationary NPC placeholder.
+- Left-clicking the isometric grid moves Via Four toward the clicked world location.
+- Holding left mouse button guides movement toward the current cursor position.
+- The camera follows Via Four.
 - `http://localhost:3000/health` returns ok.
+
+## Local Multi-Tab Test
+
+The server/socket foundation remains available for future-ready session infrastructure and local testing.
+
+Expected behavior with multiple browser tabs:
+
+- The first active tab controls `Via Four`.
+- Additional local test tabs receive non-canon labels such as `Echo 1` and `Echo 2`.
+- Moving in one tab updates the remote marker in the other tab.
+- Closing one tab removes that remote marker from the other tab.
+- Extra tabs are development/session test clients, not canon duplicate Via Fours.
 
 ## Optional Docker Compose
 
@@ -82,8 +92,8 @@ The foundation intentionally does not include:
 - quest systems
 - cloud deployment
 - production infrastructure
-- large-scale MMO systems
+- large-scale multiplayer systems
 
-Milestone 2 adds temporary multiplayer presence only. Player identities and positions are kept in server memory and disappear when the server restarts.
+The server currently stores temporary session positions in memory only. Player identities and positions disappear when the server restarts.
 
 For future PostgreSQL and account planning, see [PERSISTENCE-PLAN.md](PERSISTENCE-PLAN.md).

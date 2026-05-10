@@ -4,7 +4,7 @@
 
 10924 is intentionally browser-first.
 
-The goal is to make the world easy to enter, easy to share, and lightweight for invited players. A user should ideally be able to click a link and step into the world with minimal friction.
+The goal is to make the world easy to enter, easy to share, and lightweight for testing. A user should ideally be able to click a link and step into the world with minimal friction.
 
 Primary development and testing currently target:
 
@@ -12,6 +12,12 @@ Primary development and testing currently target:
 - Google Chrome (latest stable)
 
 Chromium-based browsers are the initial baseline.
+
+## RPG-first runtime
+
+The first playable prototype is **10924: Liberty**, an RPG-first experience centered on Via Four.
+
+The project should preserve the existing Node.js and Socket.IO foundation as future-ready session infrastructure. Do not remove networking just because the first game is no longer MMO-first. At the same time, do not let multiplayer architecture drive the early gameplay scope.
 
 ## Local-first development
 
@@ -36,11 +42,12 @@ Complex distributed infrastructure should only appear when genuinely needed.
 
 10924 is not attempting hyperscale architecture.
 
-This project targets:
+This project currently targets:
 
-- fewer than 50 concurrent players
-- a small trusted community
-- narrative and exploration experiences over large-scale combat systems
+- a focused RPG prototype
+- local development and testing
+- future-ready session/multiplayer infrastructure without MMO-first scope
+- narrative, movement, transformation, and exploration experiences over large-scale multiplayer systems
 
 The project should avoid “enterprise theater” and unnecessary complexity.
 
@@ -63,13 +70,14 @@ Likely stack direction:
 
 ## Development philosophy
 
-The goal is not to engineer the perfect MMO framework before anything playable exists.
+The goal is not to engineer the perfect RPG or multiplayer framework before anything playable exists.
 
 The goal is to quickly reach:
 
 - visible movement
 - atmosphere
-- multiplayer presence
+- Via Four as a playable character
+- interaction
 - environmental storytelling
 - playable emotional spaces
 
