@@ -1,16 +1,16 @@
 # 10924
 
-This repository exists to bring to life the universe of 10924 as a browser-based, explorable MMO/RPG narrative world.
+This repository exists to bring to life the universe of 10924 as a browser-based, explorable RPG narrative world.
 
-10924 is intended as a small-scale, personal, playable story space: part visual novel, part isometric exploration game, part shared world for friends. It is being built to explore what can happen when Bliss, Ciarelle, and Codex collaborate as creative and technical partners.
+The current first-game direction is **10924: Liberty**: an isometric narrative RPG centered on Via Four, the surviving Via-class dedrix weapon created during the Great War. The project is being built to explore what can happen when Bliss, Ciarelle, and Codex collaborate as creative and technical partners.
 
 ## Project shape
 
-- **Format:** browser-first isometric RPG/MMO prototype
-- **Scale:** fewer than 50 players
-- **Primary experience:** exploration, atmosphere, memory, and narrative discovery
-- **Initial world focus:** Druz, the Druzhinzi, and the echoes surrounding Naem Etil
-- **Core inspiration:** the atmosphere and mystery of Diablo II, without trying to recreate Diablo II's systems wholesale
+- **Format:** browser-first isometric narrative RPG prototype
+- **Primary experience:** transformation-driven action, exploration, atmosphere, memory, and narrative discovery
+- **Initial world focus:** Via Four, dedrix transformation, the Great War, and the aftermath of being classified as a sentient catastrophe-class weapon
+- **Secondary/archival focus:** Druz, the Druzhinzi, and Naem Etil remain important 10924 canon, but they are no longer the initial playable focus
+- **Core inspiration:** the atmosphere and mystery of Diablo II, the tactical pressure of deliberate input systems, and morally complicated war stories where no faction remains clean
 
 ## Development posture
 
@@ -52,3 +52,5 @@ npm run build
 ```
 
 For more detail, see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
+
+For game-facing lore, start with [docs/LORE.md](docs/LORE.md).
