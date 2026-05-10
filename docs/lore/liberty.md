@@ -48,9 +48,3 @@ The player should feel power and unease at the same time.
 Via's transformations should be exciting, but never disconnected from their cost. Her strength should feel like something she survives, not just something she owns.
 
 The player should gradually move from reacting to dedrix, to executing commands under pressure, to using transformation as an expression of Via's agency.
-
-## Relationship to older Druz direction
-
-Druz, the Druzhinzi, and Naem Etil remain canonically important to 10924. They are no longer the first playable focus for this prototype.
-
-The initial game should commit to Via Four and Liberty rather than splitting attention between Via's war arc and Naem's mythic Druz arc.
