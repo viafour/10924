@@ -12,8 +12,8 @@ const port = Number(process.env.PORT ?? 3000);
 const players = new Map<string, PlayerState>();
 const npcs: NpcState[] = [
   {
-    id: "naem",
-    displayName: "Naem",
+    id: "via-four",
+    displayName: "Via Four",
     x: 0,
     y: 0
   }

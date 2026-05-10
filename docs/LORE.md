@@ -6,9 +6,9 @@ These files are not intended to replace the full source documents. They are work
 
 ## Current first-game direction
 
-The project has pivoted from a Druz / Naem Etil MMO-first prototype toward **10924: Liberty**, a browser-first isometric narrative RPG centered on Via Four.
+The project is currently focused on **10924: Liberty**, a browser-first isometric narrative RPG centered on Via Four.
 
-The initial playable focus is now:
+The initial playable focus is:
 
 - Via Four as the primary character
 - dedrix transformation as the signature mechanic
@@ -24,21 +24,13 @@ The initial playable focus is now:
 - [Dedrix](lore/dedrix.md)
 - [The Great War](lore/great-war.md)
 
-## Secondary canon references
-
-Druz and the Druzhinzi remain part of 10924 canon, but they are no longer the first playable focus.
-
-- [Druz](lore/druz.md)
-- [Druzhinzi](lore/druzhinzi.md)
-
 ## Source material
 
 Current lore summaries are drawn from the following source documents and project conversations:
 
 - `Universal Details - 10924 - Copy`
 - `Liberty`
-- `Druzhinzi`
-- prior project conversations about Druz, Naem Etil, Via Four, dedrix, the Great War, and the browser RPG prototype
+- prior project conversations about Via Four, dedrix, the Great War, and the browser RPG prototype
 
 ## Lore philosophy
 
