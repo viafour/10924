@@ -1,6 +1,6 @@
 # Development
 
-10924 starts as a small browser-first TypeScript prototype. The goal is a visible, understandable foundation for an isometric narrative MMO/RPG, not a complete MMO architecture.
+10924 starts as a small browser-first TypeScript prototype. The goal is a visible, understandable foundation for an isometric narrative RPG, not a complete MMO architecture.
 
 ## Requirements
 
@@ -57,8 +57,8 @@ After `npm run dev`, open `http://localhost:5173` in two browser tabs.
 
 Expected behavior:
 
-- The local player is named `Explorer`, not `Naem`.
-- Naem appears as a stationary NPC placeholder.
+- The local player is named `Explorer`, not `Via Four`.
+- Via Four appears as a stationary NPC placeholder.
 - Left-clicking the isometric grid moves the local player toward the clicked world location.
 - The camera follows the local player.
 - Each browser tab receives a different temporary Explorer identity.
