@@ -10,16 +10,9 @@ import type {
 
 const port = Number(process.env.PORT ?? 3000);
 const players = new Map<string, PlayerState>();
-const npcs: NpcState[] = [
-  {
-    id: "via-four",
-    displayName: "Via Four",
-    x: 0,
-    y: 0
-  }
-];
+const npcs: NpcState[] = [];
 
-let nextExplorerNumber = 1;
+let nextEchoNumber = 1;
 
 const httpServer = createServer((request, response) => {
   if (request.url === "/health") {
@@ -81,13 +74,22 @@ httpServer.listen(port, () => {
 });
 
 function createPlayer(id: string): PlayerState {
-  const explorerNumber = nextExplorerNumber;
-  nextExplorerNumber += 1;
+  if (players.size === 0) {
+    return {
+      id,
+      displayName: "Via Four",
+      x: 0,
+      y: 0
+    };
+  }
+
+  const echoNumber = nextEchoNumber;
+  nextEchoNumber += 1;
 
   return {
     id,
-    displayName: `Explorer ${explorerNumber}`,
-    x: 1 + explorerNumber * 0.35,
+    displayName: `Echo ${echoNumber}`,
+    x: 1 + echoNumber * 0.35,
     y: 1
   };
 }
