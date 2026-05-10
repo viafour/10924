@@ -2,16 +2,19 @@
 
 ## Core visual identity
 
-10924 should feel like cold beauty: lush, living, ornate, and emotionally distant.
+10924 should feel like cold beauty: lush, living, ornate, violent, and emotionally distant.
+
+The current first-game direction, **10924: Liberty**, shifts the initial visual target away from Druz-only canopy fantasy and toward wartime science-fantasy shaped by dedrix, interstellar conflict, institutional control, and aftermath.
 
 The visual language should combine:
 
-- immense canopy height
-- pale stone and marble architecture
-- dense but intentional foliage
-- open air and negative space
-- quiet, ancient luxury
-- melancholy science-fantasy atmosphere
+- isometric readability
+- war-torn environments
+- strange organic transformation
+- austere medical and military spaces
+- beautiful but indifferent cosmic scale
+- propaganda, registry, and institutional interfaces
+- moments of quiet tenderness against catastrophic violence
 
 The world should not feel cozy in the ordinary sense. It should feel beautiful enough to invite the player forward, but vast enough to remind them that the world does not exist for them.
 
@@ -26,12 +29,55 @@ Priorities:
 - layered verticality
 - strong environmental mood
 - painterly atmosphere without losing gameplay clarity
+- clear transformation states for Via Four
+- combat readability even when dedrix forms become strange or large
 
 The camera should help players feel like they are looking into a living diorama: intimate enough to care, distant enough to feel mythic.
 
+## Liberty visual language
+
+**10924: Liberty** should visually contrast personal vulnerability with catastrophic capability.
+
+Key visual pillars:
+
+- child-scale fragility against enormous war machines
+- dedrix as unstable, beautiful, and frightening
+- medical rooms that feel urgent rather than heroic
+- military spaces that reduce people to designations and reports
+- battlefield environments where power and tragedy coexist
+- aftermath spaces where Via is observed, registered, feared, and possibly cared for
+
+## Dedrix transformation language
+
+Dedrix forms should read as purposeful but not clean.
+
+Transformation is not a costume swap. It is Via commanding a dangerous compound inside her own body.
+
+Visual goals:
+
+- partial transformations should look unstable
+- defensive forms should feel heavy, sheltering, and painful
+- fast forms should imply tearing speed and controlled asymmetry
+- sensory forms should feel quiet, expanded, and eerie
+- high-power combat forms should be frightening even when used protectively
+
+## UI and command language
+
+Transformation inputs may use directional command sequences.
+
+The UI should make these feel like neurological or bodily commands, not arcade cheat codes.
+
+Possible presentation cues:
+
+- muffled audio during transformation focus
+- subtle screen tightening
+- dedrix glow or pulse under Via's skin
+- directional glyphs or arrows that feel diegetic
+- failed or inhibited commands causing distortion or partial form feedback
+
 ## Druz visual language
 
-Druz is not mostly stone plains or conventional fantasy wilderness.
+Druz remains a secondary canon reference for later arcs or future expansions.
 
 Druz is defined by:
 
@@ -42,51 +88,23 @@ Druz is defined by:
 - architecture adapted for winged beings
 - views across treetops, mist, foliage, and open air
 
-The Druzhinzi rule the skies outside of Kebun'Dal. Their built spaces should reflect flight, height, and controlled elegance.
-
-## Architecture
-
-Architectural references should lean toward:
-
-- pale marble or light stone
-- curved terraces
-- circular or oval balconies
-- layered platforms
-- carved railings
-- ornamental tables and cushions
-- open courtyards
-- ceremonial spaces
-
-Avoid boxy, purely utilitarian layouts when designing important Druzhinzi locations.
-
-Druzhinzi spaces should feel intentionally shaped for beauty, status, and aerial movement.
-
-## Foliage and environment
-
-Foliage should feel abundant but composed.
-
-Use foliage to:
-
-- frame scenes
-- imply vertical depth
-- soften stonework
-- create partial concealment
-- show life continuing around emotional moments
-
-The world is alive even when it is not kind.
+The older Druz / Naem direction should not drive the first playable slice unless intentionally revisited.
 
 ## Character direction
 
 Characters should be readable at gameplay scale first.
 
-For Druzhinzi characters:
+For Via Four:
 
-- wings are central to silhouette and identity
-- posture should imply aerial instinct and grace
-- clothing should feel culturally specific rather than generic fantasy
-- visual details should support story and status without overwhelming readability
+- her silhouette should support both vulnerability and impossible transformation
+- forms should preserve enough continuity that the player still feels they are controlling Via
+- young Via should never be framed as a glamorized child soldier
+- older Via can carry more deliberate power, but the design should retain the history of what was done to her
 
-Naem Etil, especially, should carry a sense of quiet isolation, youth, dignity, and betrayal.
+For institutional characters:
+
+- uniforms, medical clothing, registry markings, and observer roles should communicate systems of control
+- sympathetic characters should still feel embedded in flawed institutions
 
 ## Reference images
 
