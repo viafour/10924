@@ -288,7 +288,10 @@ export class WorldRenderer {
     marker.label.text = displayName;
   }
 
-  private removeMissingMarkers(markers: Map<string, MarkerView>, activeIds: Set<string>): void {
+  private removeMissingMarkers<TMarker extends MarkerView>(
+    markers: Map<string, TMarker>,
+    activeIds: Set<string>
+  ): void {
     for (const [id, marker] of markers) {
       if (activeIds.has(id)) {
         continue;
