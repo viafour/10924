@@ -8,7 +8,7 @@ She is the only surviving complete Via-class weapon created during the Great War
 
 Via Four's creation was accidental.
 
-The Via program was originally developed by rebel scientists as a response to chemical weapons deployed by the government against rebel forces. Dedrix infusion was tested as a counter-agent, but proved too difficult to control in adults and often lethal.
+The Via program was originally developed by rebel scientists as a response to chemical weapons deployed by the government against rebel forces. Dedrix infusion was tested as a counter-agent, but proved too difficult to control in adults—with a 100% mortality rate in anyone over the age of 11.
 
 Children between ages 1 and 11 showed greater compatibility in varying quantities.
 
@@ -18,11 +18,11 @@ Via herself was healthy, but during the chaos she was confused for another dying
 
 When the mistake was discovered, the process could not simply be undone. The team attempted to stabilize her instead.
 
-She survived at **71% dedrix infusion**.
+She survived at **71% dedrix infusion**, and incredible feat given that Via One had the highest infusion percent at 21%.
 
 ## Childhood and war
 
-Via began fighting as early as six years old.
+Via began fighting as early as six years old, having infusion and training done since the age of four.
 
 This should never be framed as clean heroism. It is tragedy born from desperation. The rebellion was fighting annihilation, but it still turned children into weapons.
 
