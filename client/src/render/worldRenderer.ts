@@ -1,4 +1,4 @@
-import { Application, Container, Graphics, Sprite, Text, TextStyle, Texture } from "pixi.js";
+import { Application, Assets, Container, Graphics, Sprite, Text, TextStyle, Texture } from "pixi.js";
 import type { NpcState, PlayerState } from "@10924/shared";
 import { gridToScreen, type ScreenPoint } from "./isoMath";
 
@@ -31,6 +31,12 @@ const spritePaths = {
   rear: "/assets/sprites/via/young-adult/rear.png"
 };
 
+type PlayerTextures = {
+  front: Texture;
+  side: Texture;
+  rear: Texture;
+};
+
 export class WorldRenderer {
   private readonly world = new Container();
   private readonly groundLayer = new Container();
@@ -38,14 +44,22 @@ export class WorldRenderer {
   private readonly playerLayer = new Container();
   private readonly playerMarkers = new Map<string, PlayerMarkerView>();
   private readonly npcMarkers = new Map<string, MarkerView>();
-  private readonly playerTextures = {
-    front: Texture.from(spritePaths.front),
-    side: Texture.from(spritePaths.side),
-    rear: Texture.from(spritePaths.rear)
-  };
   private lastDiagnosticsAt = 0;
 
-  constructor(private readonly app: Application) {
+  static async create(app: Application): Promise<WorldRenderer> {
+    const playerTextures = {
+      front: await Assets.load<Texture>(spritePaths.front),
+      side: await Assets.load<Texture>(spritePaths.side),
+      rear: await Assets.load<Texture>(spritePaths.rear)
+    };
+
+    return new WorldRenderer(app, playerTextures);
+  }
+
+  private constructor(
+    private readonly app: Application,
+    private readonly playerTextures: PlayerTextures
+  ) {
     this.world.addChild(this.groundLayer, this.npcLayer, this.playerLayer);
     this.app.stage.addChild(this.world);
     this.initializeGround();

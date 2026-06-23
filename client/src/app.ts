@@ -27,7 +27,7 @@ export async function startApp(root: HTMLElement): Promise<void> {
   root.appendChild(app.canvas);
 
   const state = new ClientWorldState();
-  const world = new WorldRenderer(app);
+  const world = await WorldRenderer.create(app);
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:3000", {
     transports: ["websocket", "polling"]
   });
