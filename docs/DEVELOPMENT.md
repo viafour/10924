@@ -41,6 +41,22 @@ http://localhost:3000/health
 - `infra/` contains optional local development orchestration.
 - `docs/` contains project direction, lore, and development notes.
 
+## Runtime Art
+
+Via Four currently uses temporary young adult prototype sprites at:
+
+```text
+client/public/assets/sprites/via/young-adult/
+```
+
+Expected runtime files:
+
+- `front.png`
+- `side.png`
+- `rear.png`
+
+These stand in until the 6-year-old and 11-year-old Via sprite sets exist.
+
 ## Scripts
 
 ```sh
@@ -58,10 +74,13 @@ After `npm run dev`, open `http://localhost:5173`.
 Expected behavior:
 
 - The primary local playable character is named `Via Four`.
+- Via Four appears as the young adult sprite, not a geometric placeholder marker.
 - Via Four does not also appear as a stationary NPC placeholder.
 - Left-clicking the isometric grid moves Via Four toward the clicked world location.
 - Holding left mouse button guides movement toward the current cursor position.
+- Via Four changes facing between front, side, and rear sprites while moving.
 - The camera follows Via Four.
+- Idling remains stable; Pixi child counts do not grow over time.
 - `http://localhost:3000/health` returns ok.
 
 ## Local Multi-Tab Test
@@ -72,6 +91,7 @@ Expected behavior with multiple browser tabs:
 
 - The first active tab controls `Via Four`.
 - Additional local test tabs receive non-canon labels such as `Echo 1` and `Echo 2`.
+- Echo clients also render with the temporary young adult sprite set for now.
 - Moving in one tab updates the remote marker in the other tab.
 - Closing one tab removes that remote marker from the other tab.
 - Extra tabs are development/session test clients, not canon duplicate Via Fours.
