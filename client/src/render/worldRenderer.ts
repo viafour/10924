@@ -1,4 +1,4 @@
-import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
+import { Application, Container, Graphics, Sprite, Text, TextStyle, Texture } from "pixi.js";
 import type { NpcState, PlayerState } from "@10924/shared";
 import { gridToScreen, type ScreenPoint } from "./isoMath";
 
@@ -8,22 +8,41 @@ export type WorldRenderState = {
   npcs: NpcState[];
 };
 
+type Facing = "front" | "rear" | "side-left" | "side-right";
+
 type MarkerView = {
   container: Container;
   label: Text;
   displayName: string;
 };
 
+type PlayerMarkerView = MarkerView & {
+  sprite: Sprite;
+  facing: Facing;
+  previousPosition: ScreenPoint | null;
+};
+
 const gridRadius = 20;
 const diagnosticsIntervalMs = 5000;
+const viaSpriteScale = 1.5;
+const spritePaths = {
+  front: "/assets/sprites/via/young-adult/front.png",
+  side: "/assets/sprites/via/young-adult/side.png",
+  rear: "/assets/sprites/via/young-adult/rear.png"
+};
 
 export class WorldRenderer {
   private readonly world = new Container();
   private readonly groundLayer = new Container();
   private readonly npcLayer = new Container();
   private readonly playerLayer = new Container();
-  private readonly playerMarkers = new Map<string, MarkerView>();
+  private readonly playerMarkers = new Map<string, PlayerMarkerView>();
   private readonly npcMarkers = new Map<string, MarkerView>();
+  private readonly playerTextures = {
+    front: Texture.from(spritePaths.front),
+    side: Texture.from(spritePaths.side),
+    rear: Texture.from(spritePaths.rear)
+  };
   private lastDiagnosticsAt = 0;
 
   constructor(private readonly app: Application) {
@@ -98,8 +117,11 @@ export class WorldRenderer {
 
       const marker = this.getOrCreatePlayerMarker(player, player.id === localPlayerId);
       const position = gridToScreen(player);
+      const facing = this.getFacing(marker, position);
 
+      this.applyFacing(marker, facing);
       marker.container.position.set(position.x, position.y);
+      marker.previousPosition = position;
     }
 
     this.removeMissingMarkers(this.playerMarkers, activeIds);
@@ -120,7 +142,7 @@ export class WorldRenderer {
     this.removeMissingMarkers(this.npcMarkers, activeIds);
   }
 
-  private getOrCreatePlayerMarker(player: PlayerState, isLocalPlayer: boolean): MarkerView {
+  private getOrCreatePlayerMarker(player: PlayerState, isLocalPlayer: boolean): PlayerMarkerView {
     const existing = this.playerMarkers.get(player.id);
 
     if (existing) {
@@ -128,11 +150,7 @@ export class WorldRenderer {
       return existing;
     }
 
-    const marker = this.createPlayerMarker(
-      player.displayName,
-      isLocalPlayer ? 0xd8d1b3 : 0x8fa6c9,
-      isLocalPlayer ? 0x8fb0a9 : 0x657b9f
-    );
+    const marker = this.createPlayerMarker(player.displayName, isLocalPlayer);
 
     this.playerMarkers.set(player.id, marker);
     this.playerLayer.addChild(marker.container);
@@ -156,27 +174,29 @@ export class WorldRenderer {
     return marker;
   }
 
-  private createPlayerMarker(displayName: string, headColor: number, bodyColor: number): MarkerView {
+  private createPlayerMarker(displayName: string, isLocalPlayer: boolean): PlayerMarkerView {
     const container = new Container();
-    const marker = new Graphics();
-
-    marker
-      .circle(0, -20, 12)
-      .fill({ color: headColor })
-      .stroke({ color: 0x111820, width: 3 });
-
-    marker
-      .moveTo(0, -8)
-      .lineTo(14, 16)
-      .lineTo(-14, 16)
-      .closePath()
-      .fill({ color: bodyColor, alpha: 0.95 });
-
+    const sprite = new Sprite(this.playerTextures.front);
     const label = this.createLabel(displayName);
 
-    container.addChild(marker, label);
+    sprite.anchor.set(0.5, 1);
+    sprite.scale.set(viaSpriteScale);
+    label.position.set(0, 20);
 
-    return { container, label, displayName };
+    if (!isLocalPlayer) {
+      sprite.alpha = 0.82;
+    }
+
+    container.addChild(sprite, label);
+
+    return {
+      container,
+      sprite,
+      label,
+      displayName,
+      facing: "front",
+      previousPosition: null
+    };
   }
 
   private createNpcMarker(displayName: string): MarkerView {
@@ -215,6 +235,48 @@ export class WorldRenderer {
     label.position.set(0, 34);
 
     return label;
+  }
+
+  private getFacing(marker: PlayerMarkerView, position: ScreenPoint): Facing {
+    if (!marker.previousPosition) {
+      return marker.facing;
+    }
+
+    const dx = position.x - marker.previousPosition.x;
+    const dy = position.y - marker.previousPosition.y;
+
+    if (Math.hypot(dx, dy) < 0.2) {
+      return marker.facing;
+    }
+
+    if (Math.abs(dx) > Math.abs(dy)) {
+      return dx < 0 ? "side-left" : "side-right";
+    }
+
+    return dy < 0 ? "rear" : "front";
+  }
+
+  private applyFacing(marker: PlayerMarkerView, facing: Facing): void {
+    if (marker.facing === facing) {
+      return;
+    }
+
+    marker.facing = facing;
+
+    if (facing === "front") {
+      marker.sprite.texture = this.playerTextures.front;
+      marker.sprite.scale.set(viaSpriteScale, viaSpriteScale);
+      return;
+    }
+
+    if (facing === "rear") {
+      marker.sprite.texture = this.playerTextures.rear;
+      marker.sprite.scale.set(viaSpriteScale, viaSpriteScale);
+      return;
+    }
+
+    marker.sprite.texture = this.playerTextures.side;
+    marker.sprite.scale.set(facing === "side-left" ? -viaSpriteScale : viaSpriteScale, viaSpriteScale);
   }
 
   private updateLabel(marker: MarkerView, displayName: string): void {
