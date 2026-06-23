@@ -290,7 +290,7 @@ export class WorldRenderer {
     }
 
     marker.sprite.texture = this.playerTextures.side;
-    marker.sprite.scale.set(facing === "side-left" ? -viaSpriteScale : viaSpriteScale, viaSpriteScale);
+    marker.sprite.scale.set(facing === "side-right" ? -viaSpriteScale : viaSpriteScale, viaSpriteScale);
   }
 
   private updateLabel(marker: MarkerView, displayName: string): void {
